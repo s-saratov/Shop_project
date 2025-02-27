@@ -40,7 +40,7 @@ public class CustomerController {
 
     // Удалить покупателя из базы данных по его имени
     @DeleteMapping("/by-title/{title}")
-    public void deleteByName(@PathVariable String name) {
+    public void deleteByName(@PathVariable String title) {
 
     }
 
