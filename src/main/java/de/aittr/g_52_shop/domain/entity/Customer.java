@@ -1,13 +1,23 @@
 package de.aittr.g_52_shop.domain.entity;
 
-import java.math.BigDecimal;
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
+@Table(name = "customer")
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "active")
     private boolean active;
+
     // TODO: добавить конструктор объекта класса корзины
 
     public Customer() {
