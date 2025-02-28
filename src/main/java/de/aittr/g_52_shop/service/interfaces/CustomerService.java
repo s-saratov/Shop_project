@@ -1,25 +1,23 @@
 package de.aittr.g_52_shop.service.interfaces;
 
-import de.aittr.g_52_shop.domain.dto.ProductDto;
-import de.aittr.g_52_shop.domain.entity.Customer;
+import de.aittr.g_52_shop.domain.dto.CustomerDto;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface CustomerService {
 
     // Сохранить покупателя в базе данных (при сохранении покупатель автоматически считается активным)
-    Customer save(@RequestBody Customer customer);
+    CustomerDto save(@RequestBody CustomerDto customer);
 
     // Вернуть всех покупателей из базы данных (активных)
-    List<Customer> getAllActiveCustomers();
+    List<CustomerDto> getAllActiveCustomers();
 
     // Вернуть одного покупателя из базы данных по его идентификатору (если он активен)
-    Customer getById(@PathVariable Long id);
+    CustomerDto getById(@PathVariable Long id);
 
     // Изменить одного покупателя в базе данных по его идентификатору
-    void update(@RequestBody Customer customer);
+    void update(@RequestBody CustomerDto customer);
 
     // Удалить покупателя из базы данных по его идентификатору
     void deleteByID(@PathVariable Long id);
