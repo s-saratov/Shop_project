@@ -52,7 +52,6 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-
     public String getPassword() {
         return password;
     }
@@ -86,7 +85,6 @@ public class User implements UserDetails {
         return String.format("Пользователь: ИД - %d, логин - %s, роли - %s.",
                 id, username, roles);
     }
-
 
     // Этот метод будет использоваться фреймворком Spring Security, при помощи него он будет получать список ролей,
     // которые принадлежат нашему пользователю
