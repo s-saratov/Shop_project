@@ -8,25 +8,25 @@ import java.util.List;
 public interface CustomerService {
 
     // Сохранить покупателя в базе данных (при сохранении покупатель автоматически считается активным)
-    CustomerDto save(@RequestBody CustomerDto customer);
+    CustomerDto save(CustomerDto customer);
 
     // Вернуть всех покупателей из базы данных (активных)
     List<CustomerDto> getAllActiveCustomers();
 
     // Вернуть одного покупателя из базы данных по его идентификатору (если он активен)
-    CustomerDto getById(@PathVariable Long id);
+    CustomerDto getById(Long id);
 
     // Изменить одного покупателя в базе данных по его идентификатору
-    void update(@RequestBody CustomerDto customer);
+    void update(CustomerDto customer);
 
     // Удалить покупателя из базы данных по его идентификатору
-    void deleteByID(@PathVariable Long id);
+    void deleteByID(Long id);
 
     // Удалить покупателя из базы данных по его имени
-    void deleteByName(@PathVariable String name);
+    void deleteByName(String name);
 
     // Восстановить удалённого покупателя в базе данных по его идентификатору.
-    void restoreById(@PathVariable Long id);
+    void restoreById(Long id);
 
     // Вернуть общее количество покупателей в базе данных (активных)
     long getAllActiveCustomersCount();
