@@ -15,8 +15,10 @@ public class CustomerDto {
     )
     private Long id;
 
-    @Schema(description = "Customer name", example = "Banana")
+    @Schema(description = "Customer name", example = "John")
     private String name;
+
+    private CartDto cart;
 
     public Long getId() {
         return id;
@@ -37,12 +39,12 @@ public class CustomerDto {
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof CustomerDto that)) return false;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(cart, that.cart);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        return Objects.hash(id, name, cart);
     }
 
     @Override

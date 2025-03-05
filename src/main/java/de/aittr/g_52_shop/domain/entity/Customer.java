@@ -10,7 +10,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "name")
@@ -19,7 +19,10 @@ public class Customer {
     @Column(name = "active")
     private boolean active;
 
-    // TODO: добавить конструктор объекта класса корзины
+    // Связь один-к-одному со стороны той таблицы, в которой нет колонки,
+    // ссылающейся на другую таблицу
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Cart cart;
 
     public Customer() {
     }
@@ -48,6 +51,14 @@ public class Customer {
         this.active = active;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Customer customer)) return false;
@@ -61,7 +72,7 @@ public class Customer {
 
     @Override
     public String toString() {
-        return String.format("Покупатель: id - %d, имя - %s, активен - %s.",
+        return String.format("Покупатель: ИД - %d, имя - %s, активен - %s.",
                 id, name, active ? "да" : "нет");
     }
 }
