@@ -46,11 +46,13 @@ public class SecurityConfig {
                 // При помощи этого метода мы конфигурируем доступ к разному функционалу
                 // приложения для разных ролей пользователей
                 .authorizeHttpRequests(x -> x
-                        .requestMatchers(HttpMethod.GET, "/products/all").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/products").hasAnyRole("ADMIN", "USER")
-                        .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
-                        .anyRequest().authenticated()
+//                        .requestMatchers(HttpMethod.GET, "/products/all").permitAll()
+//                        .requestMatchers(HttpMethod.GET, "/products").hasAnyRole("ADMIN", "USER")
+//                        .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
+//                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
+//                        .anyRequest().authenticated()
+                        // TODO: раскомментировать код обратно
+                        .anyRequest().permitAll()
                 )
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();

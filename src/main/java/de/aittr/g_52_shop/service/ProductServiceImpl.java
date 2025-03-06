@@ -47,15 +47,18 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto save(ProductDto dto) {
         Product entity = mappingService.mapDtoToEntity(dto);
         entity = repository.save(entity);
+        System.out.println(" ***** РАБОТАЕТ МЕТОД SAVE *****");
         return mappingService.mapEntityToDto(entity);
     }
 
     @Override
     public List<ProductDto> getAllActiveProducts() {
 
-        logger.info("Request for all products received");
-        logger.warn("Request for all products received");
-        logger.error("Request for all products received");
+        // При помощи разных методов объекта логгера мы можем фиксировать события,
+        // происходящие в программе, на разные уровни
+//        logger.info("Request for all products received");
+//        logger.warn("Request for all products received");
+//        logger.error("Request for all products received");
 
         return repository.findAll()
                 .stream()
@@ -69,7 +72,7 @@ public class ProductServiceImpl implements ProductService {
         Product product = repository.findById(id).orElse(null);
 
         if (product == null || !product.isActive()) {
-            return null;
+            throw new RuntimeException("Product not found");
         }
 
         return mappingService.mapEntityToDto(product);
