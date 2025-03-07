@@ -2,9 +2,12 @@ package de.aittr.g_52_shop.service;
 
 import de.aittr.g_52_shop.domain.dto.ProductDto;
 import de.aittr.g_52_shop.domain.entity.Product;
+import de.aittr.g_52_shop.exception_handling.exceptions.ProductNotFoundException;
+import de.aittr.g_52_shop.exception_handling.exceptions.ProductValidationException;
 import de.aittr.g_52_shop.repository.ProductRepository;
 import de.aittr.g_52_shop.service.interfaces.ProductService;
 import de.aittr.g_52_shop.service.mapping.ProductMappingService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -45,10 +48,14 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto save(ProductDto dto) {
-        Product entity = mappingService.mapDtoToEntity(dto);
-        entity = repository.save(entity);
-        System.out.println(" ***** РАБОТАЕТ МЕТОД SAVE *****");
-        return mappingService.mapEntityToDto(entity);
+
+        try {
+            Product entity = mappingService.mapDtoToEntity(dto);
+            entity = repository.save(entity);
+            return mappingService.mapEntityToDto(entity);
+        } catch (Exception e) {
+            throw new ProductValidationException(e);
+        }
     }
 
     @Override
@@ -69,18 +76,33 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDto getById(Long id) {
-        Product product = repository.findById(id).orElse(null);
+//        Product product = repository.findById(id).orElse(null);
+//
+//        if (product == null || !product.isActive()) {
+//            throw new ProductNotFoundException(id);
+//        }
+//
+//        return mappingService.mapEntityToDto(product);
 
-        if (product == null || !product.isActive()) {
-            throw new RuntimeException("Product not found");
-        }
-
-        return mappingService.mapEntityToDto(product);
+        return mappingService.mapEntityToDto(repository.findById(id)
+                .filter(Product::isActive)
+                .orElseThrow(() -> new ProductNotFoundException(id)));
     }
 
+    /*
+    Аннотация @Transactional служить для того, чтобы транзакция, открытая в БД,
+    действовала на протяжении всей работы метода.
+    Таким образом, мы сохраняем наш продукт в состоянии managed, и все изменения, которые мы вносим
+    в этот Java-объект, автоматически попадают в БД согласно концепции ORM.
+    */
     @Override
+    @Transactional
     public void update(ProductDto product) {
-
+        Long id = product.getId();
+        Product existentProduct = repository.findById(product.getId())
+                .filter(Product::isActive)
+                .orElseThrow(() -> new ProductNotFoundException(id));
+        existentProduct.setPrice(product.getPrice());
     }
 
     @Override

@@ -1,6 +1,8 @@
 package de.aittr.g_52_shop.controller;
 
 import de.aittr.g_52_shop.domain.dto.ProductDto;
+import de.aittr.g_52_shop.exception_handling.Response;
+import de.aittr.g_52_shop.exception_handling.exceptions.ProductNotFoundException;
 import de.aittr.g_52_shop.service.interfaces.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -155,5 +157,29 @@ public class ProductController {
     public BigDecimal getProductAveragePrice() {
         return service.getAllActiveProductsAveragePrice();
     }
+
+    /*
+    Этот метод является обработчиком конкретных исключений типа ProductNotFoundException.
+    На это указывает аннотация @ExceptionHandler.
+    Как это работает:
+    1. Исключение выбрасывается сервисом.
+    2. Т.к. исключение в сервисе не обрабатывается, оно пробрасывается вызывающему коду - т.е. контроллеру.
+    3. Т.к. в контроллере есть обработчик этого исключения, и Spring это видит благодаря аннотации,
+    Spring перехватывает это исключение.
+    4. Spring сам вызывает наш метод handleException, передавая в параметр e перехваченное исключение.
+     */
+
+    /*
+    Первый способ обработки ошибок
+    ПЛЮС    - мы точечно настраиваем обработчик ошибок именно для данного контроллера,
+            если нам требуется разная логика обработки ошибок для разных контроллеров.
+    МИНУС   - если нам не требуется разная логика обработки ошибок для разных контроллеров,
+            то при таком подходе нам придётся во всех контроллерах создавать такие одинаковые обработчики
+     */
+
+//    @ExceptionHandler(ProductNotFoundException.class)
+//    public Response handleException(ProductNotFoundException e) {
+//        return new Response(e.getMessage());
+//    }
 
 }
