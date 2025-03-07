@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: g-52-shop
+  datasource:
+    url: jdbc:mysql://localhost:3306/g_52_shop
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: sql77777
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.xml
+
+key:
+  access: W8jJXCyMXrdwOGtyXjmp9L1K+8sHu23pwUxJU66hIkk=
+  refresh: zUlSYvfqO7MfYxW0mv4avHwysJObCoYJ3sMRUO2Q78k=
+
+logging:
+  file:
+    name: logs/log.log
+  level:
+    root: info
+
+messages:
+  hello: Hello from local application!
