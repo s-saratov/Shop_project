@@ -36,4 +36,8 @@ public interface ProductService {
 
     // Вернуть среднюю стоимость продукта в базе данных (из активных)
     BigDecimal getAllActiveProductsAveragePrice();
+
+    // Добавить ссылку на изображение продукта по названию продукта
+    void attachImage(String imageUrl, String productTitle);
+
 }

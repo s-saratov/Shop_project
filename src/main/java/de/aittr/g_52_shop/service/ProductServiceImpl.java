@@ -21,7 +21,6 @@ import java.util.List;
 Кроме того, данная аннотация носит информационный характер, она говорит нам о том, что
 перед нами класс сервиса.
  */
-
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -144,4 +143,17 @@ public class ProductServiceImpl implements ProductService {
     public BigDecimal getAllActiveProductsAveragePrice() {
         return null;
     }
+
+    @Override
+    @Transactional
+    public void attachImage(String imageUrl, String productTitle) {
+        repository.findByTitle(productTitle)
+                .orElseThrow(() -> new ProductNotFoundException(productTitle))
+                .setImage(imageUrl);
+    }
+
+    // https://shop-bucket.fra1.digitaloceanspaces.com
+    // fKu8t3B3geeXdTJksnMAqR8tCtIghvXKwkMdHNCXrWc - secret key
+    // DO801MMWX3RLJ7YYDHQJ - access key
+
 }

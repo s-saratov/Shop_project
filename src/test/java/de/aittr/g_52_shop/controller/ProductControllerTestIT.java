@@ -6,7 +6,6 @@ import de.aittr.g_52_shop.repository.ProductRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +17,6 @@ import org.springframework.http.*;
 import javax.crypto.SecretKey;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,7 +27,6 @@ import static org.junit.jupiter.api.Assertions.*;
 // webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT - этот атрибут говорит о том,
 // что тестовый экземпляр Tomcat с нашим приложением должен подняться на случайно выбранном
 // свободном порту операционной системы
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 // В интеграционных тестах иногда важен порядок запуска тестов.
@@ -37,7 +34,6 @@ import static org.junit.jupiter.api.Assertions.*;
 // И аннотация @TestMethodOrder(MethodOrderer.OrderAnnotation.class) говорит о том, что
 // мы будем запускать методы в определённом порядке, регулируя это при помощи другой аннотации,
 // которая будет стоять на наших тестовых методах
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ProductControllerTestIT {
 
@@ -176,5 +172,3 @@ class ProductControllerTestIT {
     }
 
 }
-
-// TODO: сверить код
