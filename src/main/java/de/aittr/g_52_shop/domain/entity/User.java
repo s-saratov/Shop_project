@@ -25,6 +25,12 @@ public class User implements UserDetails {
     @Column(name="password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "active")
+    private boolean active;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
@@ -60,6 +66,22 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -72,18 +94,18 @@ public class User implements UserDetails {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles);
+        return active == user.active && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(email, user.email) && Objects.equals(roles, user.roles);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, roles);
+        return Objects.hash(id, username, password, email, active, roles);
     }
 
     @Override
     public String toString() {
-        return String.format("Пользователь: ИД - %d, логин - %s, роли - %s.",
-                id, username, roles);
+        return String.format("Пользователь: ИД - %d, логин - %s, почта - %s, активен - %s, роли - %s.",
+                id, username, email, active ? "да" : "нет", roles);
     }
 
     // Этот метод будет использоваться фреймворком Spring Security, при помощи него он будет получать список ролей,

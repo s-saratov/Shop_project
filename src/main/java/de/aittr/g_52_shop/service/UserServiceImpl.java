@@ -1,18 +1,30 @@
 package de.aittr.g_52_shop.service;
 
+import de.aittr.g_52_shop.domain.entity.User;
 import de.aittr.g_52_shop.repository.UserRepository;
+import de.aittr.g_52_shop.service.interfaces.EmailService;
+import de.aittr.g_52_shop.service.interfaces.RoleService;
 import de.aittr.g_52_shop.service.interfaces.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
+    private final BCryptPasswordEncoder encoder;
+    private final RoleService roleService;
+    private final EmailService emailService;
 
-    public UserServiceImpl(UserRepository repository) {
+    public UserServiceImpl(UserRepository repository, BCryptPasswordEncoder encoder, RoleService roleService, EmailService emailService) {
         this.repository = repository;
+        this.encoder = encoder;
+        this.roleService = roleService;
+        this.emailService = emailService;
     }
 
     // При помощи этого метода фреймворк будет получать из БД объекты пользователей вместе с ролями
@@ -21,5 +33,16 @@ public class UserServiceImpl implements UserService {
         return repository.findByUsername(username).orElseThrow(
                 () -> new UsernameNotFoundException("User " + username + " not found")
         );
+    }
+
+    @Override
+    public void register(User user) {
+        user.setId(null);
+        user.setPassword(encoder.encode(user.getPassword()));
+        user.setActive(false);
+        user.setRoles(Set.of(roleService.getRoleUser()));
+
+        repository.save(user);
+        emailService.sendConfirmationEmail(user);
     }
 }

@@ -8,6 +8,21 @@ spring:
     password: sql77777
   liquibase:
     change-log: classpath:db/changelog/changelog-master.xml
+  mail:
+    username: s.a.saratov@gmail.com
+    password: ruczmuwwsjuhfbtf
+    host: smtp.gmail.com
+    port: 587
+    properties:
+      mail:
+        debug: true
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          ssl:
+            protocols: TLSv1.2
+            trust: smtp.gmail.com
 
 key:
   access: W8jJXCyMXrdwOGtyXjmp9L1K+8sHu23pwUxJU66hIkk=
