@@ -10,8 +10,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = ProductMappingService.class)
 public interface CartMappingService {
 
-    CustomerDto mapDtoToDto(Customer customer);
-
     CartDto mapEntityToDto(Cart entity);
 
     Cart mapDtoToEntity(CartDto dto);

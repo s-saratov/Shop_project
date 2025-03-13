@@ -83,9 +83,13 @@ public class ProductServiceImpl implements ProductService {
 //
 //        return mappingService.mapEntityToDto(product);
 
-        return mappingService.mapEntityToDto(repository.findById(id)
+        return mappingService.mapEntityToDto(getActiveProductEntityById(id));
+    }
+
+    public Product getActiveProductEntityById(Long id) {
+        return repository.findById(id)
                 .filter(Product::isActive)
-                .orElseThrow(() -> new ProductNotFoundException(id)));
+                .orElseThrow(() -> new ProductNotFoundException(id));
     }
 
     /*

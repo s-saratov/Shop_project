@@ -45,7 +45,7 @@ public class CustomerController {
             @PathVariable
             @Parameter(description = "Customer unique identifier")
             Long id) {
-        return service.getById(id);
+        return service.getActiveCustomerById(id);
     }
 
     // Изменить одного покупателя в базе данных по его идентификатору
@@ -75,7 +75,7 @@ public class CustomerController {
     // Вернуть общее количество покупателей в базе данных (активных)
     @GetMapping("/quantity")
     public long getCustomersQuantity() {
-        return service.getAllActiveCustomersCount();
+        return service.getAllActiveCustomersNumber();
     }
 
     // Вернуть стоимость корзины покупателя по его идентификатору (если он активен)
@@ -85,7 +85,14 @@ public class CustomerController {
     // TODO: написать после разработки класса корзины
 
     // Добавить товар в корзину покупателя по их идентификаторам (если оба активны)
-    // TODO: написать после разработки класса корзины
+    // localhost:8080/customers/5/add-product/10
+    @PutMapping("/{customerId}/add-product/{product-id}")
+    public void addProductToCustomersCart(
+            @PathVariable Long customerId,
+            @PathVariable Long productId
+    ) {
+        service.addProductToCustomerCart(customerId, productId);
+    }
 
     // Удалить товар из корзины покупателя по их идентификаторам
     // TODO: написать после разработки класса корзины
