@@ -36,6 +36,14 @@ public class CustomerDto {
         this.name = name;
     }
 
+    public CartDto getCart() {
+        return cart;
+    }
+
+    public void setCart(CartDto cart) {
+        this.cart = cart;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof CustomerDto that)) return false;

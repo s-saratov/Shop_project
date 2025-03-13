@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.test.context.ActiveProfiles;
 
 import javax.crypto.SecretKey;
 import java.math.BigDecimal;
@@ -35,6 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
 // мы будем запускать методы в определённом порядке, регулируя это при помощи другой аннотации,
 // которая будет стоять на наших тестовых методах
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ActiveProfiles("dev")
 class ProductControllerTestIT {
 
     // Аннотация @LocalServerPort позволяет сохранить в это поле значение случайно выбранного порта,
