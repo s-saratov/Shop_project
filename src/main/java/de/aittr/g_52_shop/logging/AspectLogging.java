@@ -22,7 +22,7 @@ public class AspectLogging {
     @Pointcut("execution(* de.aittr.g_52_shop.service.ProductServiceImpl.save(de.aittr.g_52_shop.domain.dto.ProductDto))")
     public void saveProduct() {}
 
-    // Аннотация @Before говорит о том, что этот метоод является before-адвайсом,
+    // Аннотация @Before говорит о том, что этот метод является before-адвайсом,
     // т.е. он будет отрабатывать до основного кода
     // При этом при помощи "saveProduct()" мы указываем, к какому именно Pointcut-у
     // мы привязываем этот адвайс
