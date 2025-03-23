@@ -1,6 +1,7 @@
 package de.aittr.g_52_shop.exception_handling;
 
 import de.aittr.g_52_shop.exception_handling.exceptions.CustomerNotFoundException;
+import de.aittr.g_52_shop.exception_handling.exceptions.CustomerValidationException;
 import de.aittr.g_52_shop.exception_handling.exceptions.ProductNotFoundException;
 import de.aittr.g_52_shop.exception_handling.exceptions.ProductValidationException;
 import org.springframework.http.HttpStatus;
@@ -26,7 +27,7 @@ public class GlobalExceptionHandler {
     /*
     ПЛЮС    - мы создаём глобальный обработчик ошибок, который умеет ловить ошибки, возникающие
             во всём проекте, и обрабатывать их в одном месте
-    ПЛЮС    - логика обработки ошибок вынесена в отдельный класс, таким образом, исходные метод
+    ПЛЮС    - логика обработки ошибок вынесена в отдельный класс, таким образом, исходные методы
             содержат только чистую бизнес-логику, не нагруженную обработкой ошибок
     МИНУС   - такой подход на не подойдёт, если нам нужна логика обработки ошибок для разных контроллеров.
             В таком случае лучше воспользоваться первыми двумя способами.
@@ -49,4 +50,11 @@ public class GlobalExceptionHandler {
         Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(CustomerValidationException.class)
+    public ResponseEntity<Response> handleException(CustomerValidationException e) {
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
 }

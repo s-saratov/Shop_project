@@ -43,7 +43,6 @@ public class AspectLoggingHW {
                 result);
     }
 
-
     @AfterThrowing(
             pointcut = "serviceMethods()",
             throwing = "e"

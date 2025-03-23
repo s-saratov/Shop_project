@@ -5,6 +5,7 @@ import de.aittr.g_52_shop.domain.entity.Cart;
 import de.aittr.g_52_shop.domain.entity.Customer;
 import de.aittr.g_52_shop.domain.entity.Product;
 import de.aittr.g_52_shop.exception_handling.exceptions.CustomerNotFoundException;
+import de.aittr.g_52_shop.exception_handling.exceptions.CustomerValidationException;
 import de.aittr.g_52_shop.repository.CustomerRepository;
 import de.aittr.g_52_shop.service.interfaces.CustomerService;
 import de.aittr.g_52_shop.service.interfaces.ProductService;
@@ -34,12 +35,16 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDto save(CustomerDto dto) {
         Customer entity = mappingService.mapDtoToEntity(dto);
 
-        Cart cart = new Cart();
-        cart.setCustomer(entity);
-        entity.setCart(cart);
+        try {
+            Cart cart = new Cart();
+            cart.setCustomer(entity);
+            entity.setCart(cart);
 
-        entity = repository.save(entity);
-        return mappingService.mapEntityToDto(entity);
+            entity = repository.save(entity);
+            return mappingService.mapEntityToDto(entity);
+        } catch (Exception e) {
+            throw new CustomerValidationException(e);
+        }
     }
 
     @Override
@@ -53,15 +58,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDto getActiveCustomerById(Long id) {
-        Customer customer = repository.findById(id).orElse(null);
-
-        if (customer == null || !customer.isActive()) {
-            return null;
-        }
-
-        return mappingService.mapEntityToDto(customer);
+        return mappingService.mapEntityToDto(getActiveCustomerEntityById(id));
     }
-
 
     private Customer getActiveCustomerEntityById(Long id) {
         return repository.findById(id)
@@ -71,7 +69,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void update(CustomerDto customer) {
-
+        Long id = customer.getId();
+        Customer existentCustomer = repository.findById(customer.getId())
+                .filter(Customer::isActive)
+                .orElseThrow(() -> new CustomerNotFoundException(id));
+        existentCustomer.setName(customer.getName());
     }
 
     @Override
