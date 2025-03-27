@@ -24,6 +24,12 @@ spring:
             protocols: TLSv1.2
             trust: smtp.gmail.com
 
+do:
+  accessKey: ${DO_ACCESS_KEY}
+  secretKey: ${DO_SECRET_KEY}
+  region: ${DO_REGION:fra1}
+  endpoint: ${DO_ENDPOINT:https://fra1.digitaloceanspaces.com}
+
 key:
   access: W8jJXCyMXrdwOGtyXjmp9L1K+8sHu23pwUxJU66hIkk=
   refresh: zUlSYvfqO7MfYxW0mv4avHwysJObCoYJ3sMRUO2Q78k=

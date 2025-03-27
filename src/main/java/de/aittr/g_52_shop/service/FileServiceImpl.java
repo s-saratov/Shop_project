@@ -41,14 +41,14 @@ public class FileServiceImpl implements FileService {
              для всех, у кого есть ссылка на этот файл.
              */
             PutObjectRequest request = new PutObjectRequest(
-                    "shop-bucket", uniqueName, file.getInputStream(), metaData
+                    "shop-bucket2", uniqueName, file.getInputStream(), metaData
             ).withCannedAcl(CannedAccessControlList.PublicRead);
 
             // Отправка запроса
             client.putObject(request);
 
             // Получение ссылки на файл
-            String url = client.getUrl("shop-bucket", uniqueName).toString();
+            String url = client.getUrl("shop-bucket2", uniqueName).toString();
 
             // Привязка загруженной картинки к продукту в базе данных
             productService.attachImage(url, productTitle);
