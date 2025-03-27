@@ -31,8 +31,8 @@ spring:
 do:
   accessKey: ${DO_ACCESS_KEY}
   secretKey: ${DO_SECRET_KEY}
-  region: ${DO_REGION:nyc3}
-  endpoint: ${DO_ENDPOINT:https://nyc3.digitaloceanspaces.com}
+  region: ${DO_REGION:fra1}
+  endpoint: ${DO_ENDPOINT:https://fra1.digitaloceanspaces.com}
 
 key:
   access: W8jJXCyMXrdwOGtyXjmp9L1K+8sHu23pwUxJU66hIkk=
