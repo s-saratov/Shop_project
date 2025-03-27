@@ -27,6 +27,23 @@ public class ConfirmationServiceImpl implements ConfirmationService {
         return code;
     }
 
+    @Override
+    public void confirmRegistration(String code) {
+        ConfirmationCode confirmationCode = repository.findByCode(code)
+                .orElseThrow(() -> new RuntimeException("Confirmation code not found"));
+
+        if (confirmationCode.getExpired().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Confirmation code has expired");
+        }
+
+        User user = confirmationCode.getUser();
+        user.setActive(true);
+
+        repository.delete(confirmationCode); // Удаляем код из базы
+    }
+
+
+
 //    public static void main(String[] args) {
 //        for (int i = 0; i < 5; i++) {
 //            System.out.println(UUID.randomUUID());

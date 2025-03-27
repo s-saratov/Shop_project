@@ -6,4 +6,6 @@ public interface ConfirmationService {
 
     String generateConfirmationCode(User user);
 
+    void confirmRegistration(String code);
+
 }
